@@ -30,6 +30,7 @@ export const CarsList = () => {
     handleShowHideUpdateDialog,
     handleTableRowClick,
     handleUpdateCar,
+    handleDeleteCar,
   } = useCarHook();
   const {
     allCars,
@@ -50,6 +51,7 @@ export const CarsList = () => {
               {CarColProps.map((col) => (
                 <TableCell>{col.label}</TableCell>
               ))}
+              <TableCell />
             </TableRow>
           </TableHead>
           <TableBody>
@@ -61,6 +63,15 @@ export const CarsList = () => {
                   {CarColProps.map((col) => (
                     <TableCell scope="row">{row[col.key]}</TableCell>
                   ))}
+                  <TableCell>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleDeleteCar(row)}
+                    >
+                      Delete
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))}
           </TableBody>

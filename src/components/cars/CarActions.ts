@@ -1,5 +1,10 @@
 import { createAction } from "@reduxjs/toolkit";
-import { getAllCars, createCar, updateCar } from "../../helpers/http";
+import {
+  getAllCars,
+  createCar,
+  updateCar,
+  deleteCar,
+} from "../../helpers/http";
 import { ICarType } from "./Cars.type";
 
 export const setError = createAction<string>("setError");
@@ -16,6 +21,7 @@ export const setCreateCarDialog = createAction<boolean>("setCreateCarDialog");
 export const setUpdateCarDialog = createAction<boolean>("setUpdateCarDialog");
 
 export const setCreatingCar = createAction<boolean>("setCreatingCar");
+export const setDeletingCar = createAction<boolean>("setDeletingCar");
 export const setUpdatingCar = createAction<boolean>("setUpdatingCar");
 
 export const setSelectedCar = createAction<ICarType>("setSelectedCar");
@@ -73,6 +79,26 @@ export const updateSelectedCar = (props: updateCarProps) => {
     props.closeDialog();
 
     dispatch(setUpdatingCar(false));
+
+    if (result.error) {
+      dispatch(setError(result.error));
+    }
+  };
+};
+
+type deleteCarProps = {
+  carId: number;
+  refreshCars: () => void;
+};
+
+export const deleteSelectedCar = (props: deleteCarProps) => {
+  return async (dispatch) => {
+    dispatch(setDeletingCar(true));
+
+    const result = await deleteCar(props.carId);
+    props.refreshCars();
+
+    dispatch(setDeletingCar(false));
 
     if (result.error) {
       dispatch(setError(result.error));

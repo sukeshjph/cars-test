@@ -15,5 +15,6 @@ export interface ICarReducer {
   showUpdateCar: boolean;
   creatingCar: boolean;
   updatingCar: boolean;
+  deletingCar: boolean;
   selectedCar: ICarType | null;
 }

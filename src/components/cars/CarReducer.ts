@@ -11,6 +11,7 @@ export const initialCarState: ICarReducer = {
   showUpdateCar: false,
   creatingCar: false,
   updatingCar: false,
+  deletingCar: false,
   selectedCar: null,
 };
 
@@ -32,6 +33,10 @@ export const CarReducer = createReducer(initialCarState, (builder) =>
     .addCase(CarActions.setCreatingCar, (state, action) => ({
       ...state,
       creatingCar: action.payload,
+    }))
+    .addCase(CarActions.setDeletingCar, (state, action) => ({
+      ...state,
+      deletingCar: action.payload,
     }))
     .addCase(CarActions.setUpdatingCar, (state, action) => ({
       ...state,

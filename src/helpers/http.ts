@@ -107,3 +107,30 @@ export const updateCar = async (inputCar: ICarType) => {
     };
   }
 };
+
+export const deleteCar = async (id: number) => {
+  const freshToken = await getToken();
+  const carHeaders = new Headers();
+  carHeaders.append("Authorization", `Bearer ${freshToken}`);
+
+  const requestOptions = {
+    method: "DELETE",
+    headers: carHeaders,
+    body: "",
+  };
+  let response;
+
+  try {
+    response = await fetch(
+      `http://localhost:3001/api/cars/${id}`,
+      requestOptions
+    );
+    const carDeletedId = await response.json();
+    return carDeletedId;
+  } catch (error) {
+    return {
+      error: `Failed to delete car: ${error.message}`,
+      message: "",
+    };
+  }
+};

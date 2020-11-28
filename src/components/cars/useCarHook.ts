@@ -48,6 +48,16 @@ export const useCarHook = () => {
       })
     );
 
+  const handleDeleteCar = (inputCar: ICarType) => (event) => {
+    event.stopPropagation();
+    dispatch(
+      CarActions.deleteSelectedCar({
+        carId: inputCar.id,
+        refreshCars: fetchAllCars,
+      })
+    );
+  };
+
   return {
     state,
     handleRemoveError,
@@ -56,5 +66,6 @@ export const useCarHook = () => {
     handleCreateCar,
     handleTableRowClick,
     handleUpdateCar,
+    handleDeleteCar,
   };
 };
