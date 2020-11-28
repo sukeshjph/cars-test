@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 
 export const CarsList = () => {
   const classes = useStyles();
-  const { state, handleShowHideCreateDialog } = useCarHook();
+  const { state, handleShowHideCreateDialog, handleCreateCar } = useCarHook();
   const { allCars, carsLoading, showCreateCar } = state;
 
   return (
@@ -51,7 +51,10 @@ export const CarsList = () => {
         </Table>
       </TableContainer>
       {showCreateCar && (
-        <CarCreate closeDialog={() => handleShowHideCreateDialog(false)} />
+        <CarCreate
+          closeDialog={() => handleShowHideCreateDialog(false)}
+          handleCreateCar={handleCreateCar}
+        />
       )}
       <div className={styles.buttonPanel}>
         <Button

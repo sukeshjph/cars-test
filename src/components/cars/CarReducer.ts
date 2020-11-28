@@ -8,6 +8,7 @@ export const initialCarState = {
   carsLoading: false,
   showError: false,
   showCreateCar: false,
+  creatingCar: false,
 };
 
 export const CarReducer = createReducer(initialCarState, (builder) =>
@@ -17,7 +18,7 @@ export const CarReducer = createReducer(initialCarState, (builder) =>
       showError: true,
       error: action.payload,
     }))
-    .addCase(CarActions.setCreateSoundDialog, (state, action) => ({
+    .addCase(CarActions.setCreateCarDialog, (state, action) => ({
       ...state,
       showCreateCar: action.payload,
     }))

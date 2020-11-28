@@ -13,7 +13,7 @@ import styles from "./Cars.module.scss";
 type OwnProps = {
   closeDialog: () => void;
   refetch?: () => void;
-  handleCreateCar?: () => void;
+  handleCreateCar: (c: Omit<ICarType, "id">) => void;
   creatingCar?: boolean;
 };
 
@@ -86,7 +86,7 @@ export const CarCreate: React.FC<OwnProps> = ({
               </FormControl>
               <Button
                 size="medium"
-                onClick={handleCreateCar}
+                onClick={() => handleCreateCar(car)}
                 disabled={creatingCar}
               >
                 {creatingCar ? "Creating Car" : "Submit"}
