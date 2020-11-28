@@ -1,0 +1,15 @@
+%formControlCommon {
+    margin-bottom: 20px;
+}
+
+.formControl {
+    margin-right: 30px;
+    margin-top: 0;
+
+    @extend %formControlCommon;
+}
+
+.buttonPanel {
+    margin-top: 10px;
+    text-align: left;
+}
