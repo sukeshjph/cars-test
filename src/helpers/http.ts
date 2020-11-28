@@ -77,3 +77,33 @@ export const createCar = async (inputCar: Omit<ICarType, "id">) => {
     };
   }
 };
+
+export const updateCar = async (inputCar: ICarType) => {
+  const freshToken = await getToken();
+  const carHeaders = new Headers();
+  carHeaders.append("Authorization", `Bearer ${freshToken}`);
+  carHeaders.append("Content-Type", "application/json");
+
+  const { id, ...otherCarProps } = inputCar;
+
+  const requestOptions = {
+    method: "PUT",
+    headers: carHeaders,
+    body: JSON.stringify(otherCarProps),
+  };
+  let response;
+
+  try {
+    response = await fetch(
+      `http://localhost:3001/api/cars/${id}`,
+      requestOptions
+    );
+    const carUpdated = await response.json();
+    return carUpdated;
+  } catch (error) {
+    return {
+      error: `Failed to update car: ${error.message}`,
+      message: "",
+    };
+  }
+};

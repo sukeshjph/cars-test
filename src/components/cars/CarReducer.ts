@@ -1,14 +1,17 @@
 import { createReducer } from "@reduxjs/toolkit";
 import * as CarActions from "./CarActions";
-import { ICarType } from "./Cars.type";
+import { ICarType, ICarReducer } from "./Cars.type";
 
-export const initialCarState = {
+export const initialCarState: ICarReducer = {
   allCars: [] as ICarType[],
   error: "",
   carsLoading: false,
   showError: false,
   showCreateCar: false,
+  showUpdateCar: false,
   creatingCar: false,
+  updatingCar: false,
+  selectedCar: null,
 };
 
 export const CarReducer = createReducer(initialCarState, (builder) =>
@@ -18,9 +21,25 @@ export const CarReducer = createReducer(initialCarState, (builder) =>
       showError: true,
       error: action.payload,
     }))
+    .addCase(CarActions.setSelectedCar, (state, action) => ({
+      ...state,
+      selectedCar: action.payload,
+    }))
     .addCase(CarActions.setCreateCarDialog, (state, action) => ({
       ...state,
       showCreateCar: action.payload,
+    }))
+    .addCase(CarActions.setCreatingCar, (state, action) => ({
+      ...state,
+      creatingCar: action.payload,
+    }))
+    .addCase(CarActions.setUpdatingCar, (state, action) => ({
+      ...state,
+      updatingCar: action.payload,
+    }))
+    .addCase(CarActions.setUpdateCarDialog, (state, action) => ({
+      ...state,
+      showUpdateCar: action.payload,
     }))
     .addCase(CarActions.setCarListLoading, (state, action) => ({
       ...state,

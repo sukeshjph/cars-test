@@ -12,21 +12,20 @@ import styles from "./Cars.module.scss";
 
 type OwnProps = {
   closeDialog: () => void;
-  handleCreateCar: (c: Omit<ICarType, "id">) => void;
-  creatingCar: boolean;
+  handleUpdateCar: (c: ICarType) => void;
+  updatingCar: boolean;
+  currentCar: ICarType;
 };
 
-export const CarCreate: React.FC<OwnProps> = ({
+export const CarUpdate: React.FC<OwnProps> = ({
   closeDialog,
-  handleCreateCar,
-  creatingCar,
+  handleUpdateCar,
+  updatingCar,
+  currentCar,
 }) => {
-  const [car, setCar] = useState<Omit<ICarType, "id">>({
-    make: "",
-    model: "",
-    colour: "",
-    year: 2020,
-  });
+  const { id, ...otherCar } = currentCar;
+
+  const [car, setCar] = useState<Omit<ICarType, "id">>(otherCar);
 
   const updateField = (filedType: string) => (e) => {
     setCar({
@@ -45,7 +44,7 @@ export const CarCreate: React.FC<OwnProps> = ({
         aria-describedby="alert-dialog-slide-description"
         maxWidth="md"
       >
-        <CustomDialogTitle title="Create Car" closeDialog={closeDialog} />
+        <CustomDialogTitle title="Update Car" closeDialog={closeDialog} />
         <DialogContent>
           <div>
             <FormGroup>
@@ -84,10 +83,10 @@ export const CarCreate: React.FC<OwnProps> = ({
               </FormControl>
               <Button
                 size="medium"
-                onClick={() => handleCreateCar(car)}
-                disabled={creatingCar}
+                onClick={() => handleUpdateCar({ id, ...car })}
+                disabled={updatingCar}
               >
-                {creatingCar ? "Creating Car" : "Submit"}
+                {updatingCar ? "Updating Car" : "Update"}
               </Button>
             </FormGroup>
           </div>

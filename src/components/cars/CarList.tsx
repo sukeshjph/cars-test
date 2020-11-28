@@ -12,6 +12,7 @@ import { CarColProps } from "./CarColumns";
 import { useCarHook } from "./useCarHook";
 import Button from "@material-ui/core/Button";
 import { CarCreate } from "./CarCreate";
+import { CarUpdate } from "./CarUpdate";
 import styles from "./Cars.module.scss";
 
 const useStyles = makeStyles({
@@ -22,8 +23,23 @@ const useStyles = makeStyles({
 
 export const CarsList = () => {
   const classes = useStyles();
-  const { state, handleShowHideCreateDialog, handleCreateCar } = useCarHook();
-  const { allCars, carsLoading, showCreateCar } = state;
+  const {
+    state,
+    handleShowHideCreateDialog,
+    handleCreateCar,
+    handleShowHideUpdateDialog,
+    handleTableRowClick,
+    handleUpdateCar,
+  } = useCarHook();
+  const {
+    allCars,
+    carsLoading,
+    showCreateCar,
+    creatingCar,
+    updatingCar,
+    showUpdateCar,
+    selectedCar,
+  } = state;
 
   return (
     <div>
@@ -41,7 +57,7 @@ export const CarsList = () => {
 
             {!carsLoading &&
               allCars.map((row: any) => (
-                <TableRow key={nanoid()}>
+                <TableRow key={nanoid()} onClick={handleTableRowClick(row)}>
                   {CarColProps.map((col) => (
                     <TableCell scope="row">{row[col.key]}</TableCell>
                   ))}
@@ -54,6 +70,15 @@ export const CarsList = () => {
         <CarCreate
           closeDialog={() => handleShowHideCreateDialog(false)}
           handleCreateCar={handleCreateCar}
+          creatingCar={creatingCar}
+        />
+      )}
+      {showUpdateCar && (
+        <CarUpdate
+          closeDialog={() => handleShowHideUpdateDialog(false)}
+          handleUpdateCar={handleUpdateCar}
+          updatingCar={updatingCar}
+          currentCar={selectedCar!}
         />
       )}
       <div className={styles.buttonPanel}>
