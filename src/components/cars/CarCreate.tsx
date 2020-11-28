@@ -80,12 +80,14 @@ export const CarCreate: React.FC<OwnProps> = ({
                   label="Year"
                   value={car.year}
                   onChange={updateField("year")}
+                  className="year"
                 />
               </FormControl>
               <Button
                 size="medium"
                 onClick={() => handleCreateCar(car)}
                 disabled={creatingCar}
+                className="submitButton"
               >
                 {creatingCar ? "Creating Car" : "Submit"}
               </Button>
